@@ -1,2 +1,3 @@
 # coursera java class 
-duke university \\ assignements, projects
+duke university  
+assignments, projects
