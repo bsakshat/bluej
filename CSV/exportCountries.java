@@ -13,10 +13,10 @@ public class exportCountries {
         String cInfo = countryInfo(parser, "Nauru");
         System.out.println(cInfo);
         parser = fr.getCSVParser();
-        listExportersTwoProducts(parser, "gold", "diamonds");
+        listExportersTwoProducts(parser, "cotton", "flowers");
         parser = fr.getCSVParser();
-        int numberGold = numberOfExporters(parser, "gold");
-        System.out.println("Gold Number: " + numberGold);
+        int numberGold = numberOfExporters(parser, "cocoa");
+        System.out.println("Cocoa Number: " + numberGold);
         parser = fr.getCSVParser();
         bigExporters(parser, "$999,999,999,999");
     }

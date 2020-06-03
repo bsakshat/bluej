@@ -1,0 +1,12 @@
+*.ctxt
+*.txt
+*.csv
+*.fa
+CSV/2012
+CSV/2013
+CSV/2014
+CSV/2015
+baby-names/doc
+baby-names/us_babynames_by_decade
+baby-names/us_babynames_by_year
+baby-names/us_babynames_test
