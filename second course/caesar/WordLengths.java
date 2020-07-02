@@ -11,15 +11,15 @@ public class WordLengths {
             if (!Character.isLetter(s.charAt(0))) {
                 s = s.substring(1);
             }
-            if (!Character.isLetter(s.charAt(s.length() - 1))) {
+            if (s.length() > 0 && !Character.isLetter(s.charAt(s.length() - 1))) {
                 s = s.substring(0, s.length() - 1);
             }
             int sLength = s.length();
             if (sLength > 30) {
-                counts[31]++;
+                counts[30]++;
             }
             else {
-                counts[sLength]++;
+                if (sLength > 0) counts[sLength]++;
             }
         }
     }

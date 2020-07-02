@@ -1,4 +1,4 @@
-
+import edu.duke.*;
 /**
  * Write a description of CaesarBreaker here.
  * 
@@ -29,6 +29,35 @@ public class CaesarBreaker {
         return largestIndex;
     }
     
+    private String halfOfString(String message, int start) {
+        String half = "";
+        for (int i = start; i < message.length(); i += 2) {
+            half += message.charAt(i);
+        }
+        return half;
+    }
+    
+    private int getKey(String s) {
+        int[] counts = countLetters(s);
+        int maxIn = maxIndex(counts);
+        int dkey = maxIn - 4;
+        if (maxIn < 4) {
+            dkey = 26 - (4 - maxIn);
+        }
+        return dkey;
+    }
+    
+    private String decryptTwoKeys(String encrypted) {
+        CaesarCipher cc = new CaesarCipher();
+        String firstHalf = halfOfString(encrypted, 0);
+        String secondHalf = halfOfString(encrypted, 1);
+        int firstKey = getKey(firstHalf);
+        int secondKey = getKey(secondHalf);
+        System.out.println("First Key: " + Integer.toString(firstKey));
+        System.out.println("Second Key: " + Integer.toString(secondKey));
+        return cc.encryptTwoKeys(encrypted, 26 - firstKey, 26 - secondKey);
+    }
+    
     public String decrypt(String encrypted) {
         CaesarCipher cc = new CaesarCipher();
         int[] freqs = countLetters(encrypted);
@@ -37,6 +66,14 @@ public class CaesarBreaker {
         if (maxDex < 4) {
             dkey = 26 - (4 - maxDex);
         }
-        return cc.encrypt(encrypted, 26 - dkey);
+        String message = cc.encrypt(encrypted, 26 - dkey);
+        return message;
+    }
+    
+    public void testDecrypt() {
+        FileResource fr = new FileResource();
+        String encrypted = fr.asString();
+        String decrypted = decryptTwoKeys(encrypted);
+        System.out.println(decrypted);
     }
 }

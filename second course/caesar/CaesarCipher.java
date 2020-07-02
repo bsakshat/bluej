@@ -26,6 +26,7 @@ public class CaesarCipher {
             }
             encrypted.setCharAt(i, newChar);
         }
+        System.out.println(encrypted.toString());
         return encrypted.toString();
     }
     
@@ -43,13 +44,12 @@ public class CaesarCipher {
             }
             encrypted.setCharAt(i, newChar);
         }
+        System.out.println(encrypted.toString());
         return encrypted.toString();
     }
     
     public void testCaeser(String message, int key1, int key2) {
-        String encrypted = encryptTwoKeys(message, key1, key2);
-        System.out.println(encrypted);
-        String decrypted = encrypt(message, 26-key1);
+        String decrypted = encryptTwoKeys(message, 26 - key1, 26 - key2);
         System.out.println(decrypted);
     }
 }
