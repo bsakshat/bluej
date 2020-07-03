@@ -1,3 +1,5 @@
+package Story;
+
 import java.util.*;
 import edu.duke.*;
 /**
@@ -62,6 +64,6 @@ public class CharactersInPlay {
                 Integer.toString(myFreqs.get(index)) + " parts.");
             }
         }
-        //charactersWithNumParts(num1, num2);
+        charactersWithNumParts(10, 15);
     }
 }

@@ -3,43 +3,36 @@ package Story;
 import edu.duke.*;
 import java.util.*;
 
-public class GladLib {
-    private ArrayList<String> adjectiveList;
-    private ArrayList<String> nounList;
-    private ArrayList<String> colorList;
-    private ArrayList<String> countryList;
-    private ArrayList<String> nameList;
-    private ArrayList<String> animalList;
-    private ArrayList<String> timeList;
-    private ArrayList<String> verbList;
-    private ArrayList<String> fruitList;
+public class GladLibMap {
+    private HashMap<String, ArrayList<String>> wordsList;
     private ArrayList<String> usedList;
+    private ArrayList<String> usedCategories;
     
     private Random myRandom;
     
     private static String dataSourceURL = "http://dukelearntoprogram.com/course3/data";
     private static String dataSourceDirectory = "data";
     
-    public GladLib(){
+    public GladLibMap(){
+        wordsList = new HashMap<String, ArrayList<String>>();
         initializeFromSource(dataSourceDirectory);
         myRandom = new Random();
     }
     
-    public GladLib(String source){
+    public GladLibMap(String source){
+        wordsList = new HashMap<String, ArrayList<String>>();
         initializeFromSource(source);
         myRandom = new Random();
     }
     
     private void initializeFromSource(String source) {
-        adjectiveList= readIt(source+"/adjective.txt"); 
-        nounList = readIt(source+"/noun.txt");
-        colorList = readIt(source+"/color.txt");
-        countryList = readIt(source+"/country.txt");
-        nameList = readIt(source+"/name.txt");      
-        animalList = readIt(source+"/animal.txt");
-        timeList = readIt(source+"/timeframe.txt");
-        verbList = readIt(source+"/verb.txt");
-        fruitList = readIt(source+"/fruit.txt");
+        String[] categories = {"adjective", "noun", "color", "country", "name", "animal", 
+                                "time", "verb", "fruit"};
+        ArrayList<String> wordList;
+        for (String s : categories) {
+            wordList = readIt(source+"/" + s + ".txt");
+            wordsList.put(s, wordList);
+        }        
         usedList = new ArrayList<String>();
     }
     
@@ -49,35 +42,11 @@ public class GladLib {
     }
     
     private String getSubstitute(String label) {
-        if (label.equals("country")) {
-            return randomFrom(countryList);
-        }
-        if (label.equals("color")){
-            return randomFrom(colorList);
-        }
-        if (label.equals("noun")){
-            return randomFrom(nounList);
-        }
-        if (label.equals("name")){
-            return randomFrom(nameList);
-        }
-        if (label.equals("adjective")){
-            return randomFrom(adjectiveList);
-        }
-        if (label.equals("animal")){
-            return randomFrom(animalList);
-        }
-        if (label.equals("timeframe")){
-            return randomFrom(timeList);
-        }
-        if (label.equals("number")){
-            return ""+myRandom.nextInt(50)+5;
-        }
-        if (label.equals("verb")){
-            return randomFrom(verbList);
-        }
-        if (label.equals("fruit")){
-            return randomFrom(fruitList);
+        if (wordsList.containsKey(label)) {
+            if (!usedCategories.contains(label)) {
+                usedCategories.add(label);
+            }
+            return randomFrom(wordsList.get(label));
         }
         return "**UNKNOWN**";
     }
@@ -144,12 +113,30 @@ public class GladLib {
         return list;
     }
     
+    private int totalWordsInMap() {
+        int count = 0;
+        for (String s : wordsList.keySet()) {
+            count += wordsList.get(s).size();
+        }
+        return count;
+    }
+    
+    private int totalWordsConsidered() {
+        int count = 0;
+        for (String s : usedCategories) {
+            count += wordsList.get(s).size();
+        }
+        return count;
+    }
+    
     public void makeStory(){
         usedList.clear();
         System.out.println("\n");
         String story = fromTemplate("data/madtemplate2.txt");
         printOut(story, 60);
         System.out.println("\nNo. of words replaced: " + Integer.toString(usedList.size()));
+        System.out.println("Total no. of words: " + Integer.toString(totalWordsInMap()));
+        System.out.println("Total no. of words considered: " + Integer.toString(totalWordsConsidered()));
     }
     
 
