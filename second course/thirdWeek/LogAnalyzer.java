@@ -23,9 +23,8 @@ public class LogAnalyzer
      public void readFile(String filename) {
          // complete method
          FileResource fr = new FileResource(filename);
-         WebLogParser wb = new WebLogParser();
          for (String s : fr.lines()) {
-             LogEntry record = wb.parseEntry(s);
+             LogEntry record = WebLogParser.parseEntry(s);
              records.add(record);
          }
      }
@@ -50,6 +49,34 @@ public class LogAnalyzer
          }
      }
      
+     public ArrayList<String> uniqueIPVisitsOnDay(String someday) {
+         ArrayList<String> uniqueIPsOnDay = new ArrayList<String>();
+         for (LogEntry lg : records) {
+             String date = lg.getAccessTime().toString();
+             if (date.indexOf(someday) != -1) {
+                 String ip = lg.getIpAddress();
+                 if (!uniqueIPsOnDay.contains(ip)) {
+                     uniqueIPsOnDay.add(ip);
+                 }
+             }
+         }
+         return uniqueIPsOnDay;
+     }
+     
+     public int uniqueIPsInRange(int low, int high) {
+         ArrayList<String> uniqueIPsOnRange = new ArrayList<String>();
+         for (LogEntry lg : records) {
+             int code = lg.getStatusCode();
+             if (code >= low && code <= high) {
+                 String ip = lg.getIpAddress();
+                 if (!uniqueIPsOnRange.contains(ip)) {
+                     uniqueIPsOnRange.add(ip);
+                    }
+                }
+            }
+         return uniqueIPsOnRange.size();
+        }
+         
      public void printAll() {
          for (LogEntry le : records) {
              System.out.println(le);

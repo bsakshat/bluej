@@ -28,13 +28,28 @@ public class Tester
     
     public void testUniqueIP() {
         LogAnalyzer lg = new LogAnalyzer();
-        lg.readFile("thirdWeek/short-test_log");
+        lg.readFile("thirdWeek/weblog1_log");
         lg.countUniqueIPs();
     }
     
     public void testPrintAllHigherThanNum() {
         LogAnalyzer lg = new LogAnalyzer();
-        lg.readFile("thirdWeek/short-test_log");
-        lg.printAllHigherThanNum(200);
+        lg.readFile("thirdWeek/weblog1_log");
+        lg.printAllHigherThanNum(400);
+    }
+    
+    public void testUniqueIPVisitsOnDay() {
+        LogAnalyzer lg = new LogAnalyzer();
+        lg.readFile("thirdWeek/weblog1_log");
+        ArrayList<String> uniqueIPsOnDay = lg.uniqueIPVisitsOnDay("Mar 17");
+        for (String s : uniqueIPsOnDay) {
+            System.out.println(s);
+        }
+    }
+    
+    public void testUniqueIPsInRange() {
+        LogAnalyzer lg = new LogAnalyzer();
+        lg.readFile("thirdWeek/weblog1_log");
+        System.out.println(Integer.toString(lg.uniqueIPsInRange(300, 399)));
     }
 }
